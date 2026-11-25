@@ -9,7 +9,9 @@
 -- valamint az items tábla origin <> 'owner' sorai.
 -- =============================================================================
 
-create extension if not exists pgcrypto;
+-- Supabase-ben a pgcrypto az "extensions" sémában él.
+create schema if not exists extensions;
+create extension if not exists pgcrypto with schema extensions;
 
 -- -----------------------------------------------------------------------------
 -- Típusok
@@ -514,9 +516,9 @@ begin
   -- 10 karakter, félreérthető karakterek nélkül (0/O, 1/I/L)
   select string_agg(substr('ABCDEFGHJKMNPQRSTUVWXYZ23456789', 1 + (get_byte(b, i) % 31), 1), '')
     into v_code
-    from (select gen_random_bytes(10) as b) r, generate_series(0, 9) as i;
+    from (select extensions.gen_random_bytes(10) as b) r, generate_series(0, 9) as i;
   insert into group_invites (group_id, code_hash, role, created_by, expires_at, max_uses)
-    values (p_group, encode(digest(v_code, 'sha256'), 'hex'), p_role, auth.uid(), p_expires_at, p_max_uses);
+    values (p_group, encode(extensions.digest(v_code, 'sha256'), 'hex'), p_role, auth.uid(), p_expires_at, p_max_uses);
   return v_code;
 end;
 $$;
@@ -529,7 +531,7 @@ declare
 begin
   if auth.uid() is null then raise exception 'not_authenticated' using errcode = '42501'; end if;
   select * into v_inv from group_invites
-    where code_hash = encode(digest(upper(trim(p_code)), 'sha256'), 'hex')
+    where code_hash = encode(extensions.digest(upper(trim(p_code)), 'sha256'), 'hex')
     for update;
   if not found
      or (v_inv.expires_at is not null and v_inv.expires_at < now())
