@@ -6,8 +6,9 @@ import { publicSupabaseEnv } from './env';
 
 /** Szerveroldali kliens a bejelentkezett felhasználó nevében (RLS érvényes). */
 export async function createClient() {
-  const { url, anonKey } = publicSupabaseEnv();
+  // Előbb a sütik: ettől az oldal dinamikus lesz, és buildeléskor nem fut le.
   const cookieStore = await cookies();
+  const { url, anonKey } = publicSupabaseEnv();
   return createServerClient(url, anonKey, {
     cookies: {
       getAll: () => cookieStore.getAll(),

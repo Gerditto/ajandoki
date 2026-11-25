@@ -6,6 +6,7 @@ export default function Home() {
         Kívánságlisták, titkos foglalás és igazságos ajándékhúzás a családnak, a barátoknak és a
         munkahelynek. Dupla ajándék nélkül.
       </p>
+      <a href="/belepes" className="inline-flex min-h-12 w-fit items-center rounded-full bg-primary px-6 font-medium text-primary-contrast">Kezdjük!</a>
       <div className="rounded-card border border-border bg-secret-soft p-4 text-secret">
         <span aria-hidden>🔒</span> Amit lilával látsz, azt a megajándékozott soha nem látja.
       </div>
