@@ -1,26 +1,73 @@
 @import "tailwindcss";
 
+/* =========================================================================
+   Ajándoki design tokenek (lásd tervdokumentum, 7. fejezet)
+   A "secret" szín jelöl minden olyan elemet, amit a megajándékozott SOHA nem lát.
+   ========================================================================= */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg: #faf7f2;
+  --surface: #ffffff;
+  --text: #1e1b24;
+  --muted: #6b6475;
+  --border: #e7e1d8;
+  --primary: #c2410c;
+  --primary-contrast: #ffffff;
+  --secret: #5b21b6;
+  --secret-soft: #ede9fe;
+  --success: #15803d;
+  --radius-card: 16px;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+:root[data-theme="dark"] {
+  --bg: #15131a;
+  --surface: #1f1c26;
+  --text: #f2eef5;
+  --muted: #a49cae;
+  --border: #2e2a37;
+  --primary: #fb923c;
+  --primary-contrast: #15131a;
+  --secret: #a78bfa;
+  --secret-soft: #2e1f52;
+  --success: #4ade80;
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  :root:not([data-theme="light"]) {
+    --bg: #15131a;
+    --surface: #1f1c26;
+    --text: #f2eef5;
+    --muted: #a49cae;
+    --border: #2e2a37;
+    --primary: #fb923c;
+    --primary-contrast: #15131a;
+    --secret: #a78bfa;
+    --secret-soft: #2e1f52;
+    --success: #4ade80;
   }
 }
 
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-text: var(--text);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
+  --color-primary: var(--primary);
+  --color-primary-contrast: var(--primary-contrast);
+  --color-secret: var(--secret);
+  --color-secret-soft: var(--secret-soft);
+  --color-success: var(--success);
+  --radius-card: var(--radius-card);
+  --font-sans: var(--font-inter);
+  --font-display: var(--font-fraunces);
+}
+
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-inter), system-ui, sans-serif;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
 }

@@ -1,36 +1,55 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Ajándoki
 
-## Getting Started
+Intelligens, közösségi ajándékozási asszisztens: kívánságlisták, titkos foglalás,
+csoportok és Secret Santa. Magyar elsőként, nemzetközi bővítésre tervezve.
 
-First, run the development server:
+A termékterv (versenytárselemzés, PRD, architektúra, adatmodell, MVP, ütemterv):
+lásd a projekt tervdokumentumát.
+
+## A legfontosabb szabály
+
+A megajándékozott **kizárólag a saját maga által rögzített adatokat** látja.
+A foglalások, titkos ötletek, megjegyzések és a sorsolás eredménye számára
+adatbázisszinten lekérdezhetetlenek (PostgreSQL RLS), nem csak a felületen
+rejtettek. Ezt a `supabase/tests/privacy.test.sql` minden változtatásnál ellenőrzi.
+
+## Felépítés
+
+| Mappa | Tartalom |
+| --- | --- |
+| `src/app` | Next.js (App Router) oldalak |
+| `src/lib/supabase` | Supabase kliensek (böngésző, szerver, service role) |
+| `src/lib/draw` | Secret Santa sorsoló algoritmus és tesztjei |
+| `supabase/migrations` | Adatbázisséma, RLS-szabályok, üzleti függvények |
+| `supabase/tests` | Titkossági és egyidejű foglalási tesztek |
+| `scripts/test-db.sh` | Adatbázistesztek futtatása helyi PostgreSQL-en |
+
+## Fejlesztés
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
+pnpm install
+cp .env.example .env.local   # Supabase URL és kulcsok
 pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Tesztek:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+pnpm test        # egységtesztek (sorsolás)
+pnpm test:db     # titkossági + 50 párhuzamos foglalás teszt (PostgreSQL 16 kell)
+pnpm lint && pnpm typecheck
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Döntések
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **Titkosság az adatbázisban.** Minden titkos tábla RLS-sel zárja ki a címzettet;
+  írni csak `security definer` függvényeken át lehet (`reserve_item`,
+  `release_reservation`, `set_reservation_status`).
+- **Dupla foglalás.** Részleges egyedi index (`reservations_one_active_per_item`)
+  + sorzár a tételen. Csoportokon átnyúlóan is működik, és a válasz
+  (`unavailable`) nem árulja el, ki vagy melyik csoportban foglalt.
+- **Sorsolás a szerveren.** Az eredményt service role írja be; mindenki csak a
+  saját sorát látja, a szervező sem lát mást (`draw_progress` csak azt mutatja,
+  ki nézte meg).
+- **Meghívókód.** Csak a SHA-256 hash-e tárolódik.
+- **Betűk.** A `next/font` saját domainről szolgálja ki őket (nincs Google Fonts hívás).
