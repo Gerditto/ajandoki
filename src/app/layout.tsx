@@ -10,6 +10,9 @@ const fraunces = Fraunces({ variable: "--font-fraunces", subsets: ["latin", "lat
 export const metadata: Metadata = {
   title: "Ajándoki – a meglepetés biztonságban van",
   description: "Kívánságlisták, titkos foglalás és ajándékhúzás a családnak és a barátoknak.",
+  applicationName: "Ajándoki",
+  appleWebApp: { capable: true, title: "Ajándoki", statusBarStyle: "default" },
+  formatDetection: { telephone: false },
 };
 
 export const viewport: Viewport = {
