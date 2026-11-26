@@ -24,7 +24,10 @@ export async function saveProfile(_prev: ProfileState, formData: FormData): Prom
   if (error) return { errors: { _: 'Nem sikerült menteni. Próbáld újra.' } };
 
   revalidatePath('/', 'layout');
-  if (formData.get('$onboarding') === '1') redirect('/listam');
+  if (formData.get('$onboarding') === '1') {
+    const next = String(formData.get('$next') ?? '');
+    redirect(next.startsWith('/') && !next.startsWith('//') && next !== '/ma' ? next : '/listam');
+  }
   return { ok: true };
 }
 

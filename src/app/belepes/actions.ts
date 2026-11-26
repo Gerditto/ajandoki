@@ -55,7 +55,7 @@ export async function signUpWithPassword(_prev: LoginState, formData: FormData):
   const supabase = await createClient();
   const { data, error } = await supabase.auth.signUp({
     ...parsed.data,
-    options: { emailRedirectTo: `${origin}/auth/confirm?tovabb=%2Fbemutatkozas` },
+    options: { emailRedirectTo: `${origin}/auth/confirm?tovabb=${encodeURIComponent(`/bemutatkozas?tovabb=${safeNext(formData.get('tovabb'))}`)}` },
   });
   if (error) {
     if (/registered|exists/i.test(error.message)) {
@@ -67,7 +67,7 @@ export async function signUpWithPassword(_prev: LoginState, formData: FormData):
     return { email, errors: { email: 'Most nem sikerült a regisztráció. Próbáld újra pár perc múlva.' } };
   }
   // Ha a Supabase-ben ki van kapcsolva az e-mail-megerősítés, azonnal van munkamenet.
-  if (data.session) redirect('/bemutatkozas');
+  if (data.session) redirect(`/bemutatkozas?tovabb=${encodeURIComponent(safeNext(formData.get('tovabb')))}`);
   return { email, info: 'Küldtünk egy megerősítő levelet. Kattints a benne lévő linkre, utána be tudsz lépni.' };
 }
 

@@ -6,7 +6,7 @@ import { createServerClient } from '@supabase/ssr';
  * oldalakról a belépésre irányít. A tényleges jogosultságot NEM ez adja:
  * azt az adatbázis RLS-szabályai garantálják.
  */
-const PROTECTED = ['/ma', '/listam', '/csoportok', '/profil', '/bemutatkozas'];
+const PROTECTED = ['/ma', '/listam', '/csoportok', '/profil', '/bemutatkozas', '/csatlakozas', '/szemely'];
 
 export async function proxy(request: NextRequest) {
   let response = NextResponse.next({ request });

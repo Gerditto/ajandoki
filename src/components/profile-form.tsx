@@ -5,11 +5,12 @@ import { Button, Field } from '@/components/ui';
 
 type Initial = { display_name?: string | null; birthday?: string | null; nameday?: string | null };
 
-export function ProfileForm({ initial, onboarding = false }: { initial?: Initial; onboarding?: boolean }) {
+export function ProfileForm({ initial, onboarding = false, next }: { initial?: Initial; onboarding?: boolean; next?: string }) {
   const [state, action, pending] = useActionState<ProfileState, FormData>(saveProfile, {});
   return (
     <form action={action} className="flex flex-col gap-4">
       {onboarding && <input type="hidden" name="$onboarding" value="1" />}
+      {next && <input type="hidden" name="$next" value={next} />}
       <Field label="Hogy szólíthatunk?" name="display_name" required autoComplete="given-name"
         defaultValue={initial?.display_name ?? ''} error={state.errors?.display_name} />
       <Field label="Születésnap (nem kötelező)" name="birthday" type="date"

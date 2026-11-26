@@ -4,7 +4,9 @@ import { ProfileForm } from '@/components/profile-form';
 
 export const metadata = { title: 'Üdv az Ajándokiban!' };
 
-export default async function OnboardingPage() {
+export default async function OnboardingPage({ searchParams }: PageProps<'/bemutatkozas'>) {
+  const sp = await searchParams;
+  const next = typeof sp.tovabb === 'string' ? sp.tovabb : undefined;
   const { supabase, user } = await requireUser();
   const { data } = await supabase.from('profiles').select('id').eq('id', user.id).maybeSingle();
   if (data) redirect('/ma');
@@ -16,7 +18,7 @@ export default async function OnboardingPage() {
           Pár adat, hogy a családod és a barátaid tudják, kinek szánják az ajándékot. Minden más később is ráér.
         </p>
       </div>
-      <ProfileForm onboarding />
+      <ProfileForm onboarding next={next} />
     </main>
   );
 }
