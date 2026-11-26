@@ -34,6 +34,7 @@ export function LoginForm({ next }: { next: string }) {
   }
 
   return (
+    <div className="flex flex-col gap-6">
     <form action={sendAction} className="flex flex-col gap-4">
       <input type="hidden" name="tovabb" value={next} />
       <Field label="E-mail-cím" name="email" type="email" autoComplete="email" inputMode="email" required
@@ -41,5 +42,16 @@ export function LoginForm({ next }: { next: string }) {
         hint="Jelszó nem kell: küldünk egy belépőkódot." />
       <Button type="submit" disabled={sending}>{sending ? 'Küldés…' : 'Belépőkód kérése'}</Button>
     </form>
+    {sent.email && (
+      <form action={verifyAction} className="flex flex-col gap-4 border-t border-border pt-6">
+        <p className="text-sm text-muted">Van már kódod egy korábbi levélből? Írd be ide:</p>
+        <input type="hidden" name="email" value={sent.email} />
+        <input type="hidden" name="tovabb" value={next} />
+        <Field label="Belépőkód" name="token" inputMode="numeric" autoComplete="one-time-code"
+          pattern="[0-9]*" maxLength={10} required error={verify.errors?.token} />
+        <Button type="submit" variant="ghost" disabled={verifying}>{verifying ? 'Ellenőrzés…' : 'Belépés kóddal'}</Button>
+      </form>
+    )}
+    </div>
   );
 }
