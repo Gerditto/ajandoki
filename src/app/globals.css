@@ -2,47 +2,57 @@
 
 /* =========================================================================
    Ajándoki design tokenek (lásd tervdokumentum, 7. fejezet)
-   A "secret" szín jelöl minden olyan elemet, amit a megajándékozott SOHA nem lát.
+   Elegáns, ünnepélyes paletta: mélyzöld + arany, elefántcsont alap.
+   A "secret" (sötét arany) szín jelöl minden olyan elemet, amit a megajándékozott SOHA nem lát.
    ========================================================================= */
 :root {
-  --bg: #faf7f2;
-  --surface: #ffffff;
-  --text: #1e1b24;
-  --muted: #6b6475;
-  --border: #e7e1d8;
-  --primary: #c2410c;
-  --primary-contrast: #ffffff;
-  --secret: #5b21b6;
-  --secret-soft: #ede9fe;
-  --success: #15803d;
-  --radius-card: 16px;
+  --bg: #f6f2e8;
+  --surface: #fffdf7;
+  --text: #16241d;
+  --muted: #5e6a62;
+  --border: #e3dac6;
+  --primary: #1c4532;
+  --primary-contrast: #fbf6e9;
+  --gold: #b48a3c;
+  --gold-soft: #efe3c4;
+  --secret: #7d5f1c;
+  --secret-contrast: #fffaf0;
+  --secret-soft: #f5ecd6;
+  --success: #2c6a49;
+  --radius-card: 14px;
 }
 
 :root[data-theme="dark"] {
-  --bg: #15131a;
-  --surface: #1f1c26;
-  --text: #f2eef5;
-  --muted: #a49cae;
-  --border: #2e2a37;
-  --primary: #fb923c;
-  --primary-contrast: #15131a;
-  --secret: #a78bfa;
-  --secret-soft: #2e1f52;
-  --success: #4ade80;
+  --bg: #0e1813;
+  --surface: #15231c;
+  --text: #efe8d6;
+  --muted: #a2ab9f;
+  --border: #2a3b31;
+  --primary: #d2b26a;
+  --primary-contrast: #0e1813;
+  --gold: #d2b26a;
+  --gold-soft: #2e2c1c;
+  --secret: #dcc07e;
+  --secret-contrast: #0e1813;
+  --secret-soft: #24281b;
+  --success: #7fbf95;
 }
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --bg: #15131a;
-    --surface: #1f1c26;
-    --text: #f2eef5;
-    --muted: #a49cae;
-    --border: #2e2a37;
-    --primary: #fb923c;
-    --primary-contrast: #15131a;
-    --secret: #a78bfa;
-    --secret-soft: #2e1f52;
-    --success: #4ade80;
+    --bg: #0e1813;
+    --surface: #15231c;
+    --text: #efe8d6;
+    --muted: #a2ab9f;
+    --border: #2a3b31;
+    --primary: #d2b26a;
+    --primary-contrast: #0e1813;
+    --gold: #d2b26a;
+    --gold-soft: #2e2c1c;
+    --secret: #dcc07e;
+    --secret-contrast: #0e1813;
+    --secret-soft: #24281b;
+    --success: #7fbf95;
   }
 }
 
@@ -55,6 +65,9 @@
   --color-primary: var(--primary);
   --color-primary-contrast: var(--primary-contrast);
   --color-secret: var(--secret);
+  --color-secret-contrast: var(--secret-contrast);
+  --color-gold: var(--gold);
+  --color-gold-soft: var(--gold-soft);
   --color-secret-soft: var(--secret-soft);
   --color-success: var(--success);
   --radius-card: var(--radius-card);
@@ -66,6 +79,26 @@ body {
   background: var(--bg);
   color: var(--text);
   font-family: var(--font-inter), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+@layer base {
+  h1, h2, h3 {
+    font-family: var(--font-fraunces), Georgia, serif;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+  h1 { color: var(--primary); }
+}
+
+::selection { background: var(--gold-soft); }
+
+/* Vékony arany díszvonal címek alá */
+.ornament {
+  display: block;
+  width: 3rem;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
 }
 
 @media (prefers-reduced-motion: reduce) {
