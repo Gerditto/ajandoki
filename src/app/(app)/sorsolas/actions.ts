@@ -5,6 +5,7 @@ import { z } from 'zod';
 import { createClient, createServiceClient } from '@/lib/supabase/server';
 import { checkFeasibility, runDraw, type DrawProblem } from '@/lib/draw/draw';
 import { fieldErrors } from '@/lib/validation/schemas';
+import { notifyDrawDone } from '@/lib/email/jobs';
 
 export type DrawFormState = { errors?: Record<string, string> };
 
@@ -177,6 +178,7 @@ export async function performDraw(formData: FormData) {
   const pairs = [...result.assignments].map(([giver, receiver]) => ({ giver, receiver }));
   const { error } = await admin.rpc('commit_draw', { p_draw: drawId, p_pairs: pairs });
   if (error) back(drawId, 'A sorsolás nem sikerült, próbáld újra.');
+  await notifyDrawDone(drawId).catch((e) => console.error('draw_notify_failed', e));
   revalidatePath(`/sorsolas/${drawId}`);
   back(drawId);
 }

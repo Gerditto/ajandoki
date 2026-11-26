@@ -1,6 +1,6 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "main": ".open-next/worker.js",
+  "main": "custom-worker.ts",
   "name": "ajandoki",
   "compatibility_date": "2026-11-01",
   "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public", "no_handle_cross_request_promise_resolution"],
@@ -13,7 +13,10 @@
   // "Secret" típusú változóként kerülnek be, soha nem ide.
   "vars": {
     "NEXT_PUBLIC_SUPABASE_URL": "https://cyiwqwyixyfnlkhimuhp.supabase.co",
-    "NEXT_PUBLIC_SUPABASE_ANON_KEY": "sb_publishable_lAfpwwztSmy51CF7sWIq3Q_LDajsHpD"
+    "NEXT_PUBLIC_SUPABASE_ANON_KEY": "sb_publishable_lAfpwwztSmy51CF7sWIq3Q_LDajsHpD",
+    "APP_URL": "https://ajandoki.prekopagerda-0.workers.dev"
   },
+  // Napi emlékeztetők: 07:00 UTC = 8:00 (télen) / 9:00 (nyáron) Budapesten.
+  "triggers": { "crons": ["0 7 * * *"] },
   "observability": { "enabled": true }
 }

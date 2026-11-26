@@ -36,3 +36,11 @@ export async function signOut() {
   await supabase.auth.signOut();
   redirect('/');
 }
+
+export async function setEmailReminders(formData: FormData) {
+  const supabase = await createClient();
+  const { data: auth } = await supabase.auth.getUser();
+  if (!auth.user) redirect('/belepes');
+  await supabase.from('profiles').update({ email_reminders: formData.get('on') === '1' }).eq('id', auth.user.id);
+  revalidatePath('/profil');
+}
