@@ -17,6 +17,12 @@ export default async function GroupPage({ params }: PageProps<'/csoportok/[id]'>
     .eq('group_id', id)
     .order('joined_at');
 
+  const { data: draws } = await supabase
+    .from('draws')
+    .select('id, name, status, event_date')
+    .eq('group_id', id)
+    .order('created_at', { ascending: false });
+
   const me = members?.find((m) => m.profile_id === user.id);
   const isAdmin = me?.role === 'owner' || me?.role === 'admin';
 
@@ -49,6 +55,31 @@ export default async function GroupPage({ params }: PageProps<'/csoportok/[id]'>
             );
           })}
         </ul>
+      </section>
+
+      <section className="flex flex-col gap-3">
+        <div className="flex items-end justify-between gap-3">
+          <h2 className="font-display text-xl">Titkos Mikulás</h2>
+          <Link href={`/sorsolas/uj?csoport=${group.id}`} className="text-sm text-primary underline">+ Új sorsolás</Link>
+        </div>
+        {draws && draws.length > 0 ? (
+          <ul className="flex flex-col gap-2">
+            {draws.map((d) => (
+              <li key={d.id}>
+                <Link href={`/sorsolas/${d.id}`}>
+                  <Card className="flex items-center justify-between hover:border-gold">
+                    <span className="font-medium">{d.name}</span>
+                    <span className={`text-sm ${d.status === 'draft' ? 'text-muted' : 'text-gold'}`}>
+                      {d.status === 'draft' ? 'Előkészítés alatt' : 'Kisorsolva →'}
+                    </span>
+                  </Card>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p className="text-sm text-muted">Még nincs sorsolás. Indíts egyet a karácsonyi ajándékozáshoz!</p>
+        )}
       </section>
 
       {isAdmin && (

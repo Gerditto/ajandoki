@@ -243,4 +243,67 @@ do $$ begin
 end $$;
 reset role;
 
+-- ---- commit_draw / reset_draw -------------------------------------------------
+-- A szervező nem hívhatja a commit_draw-t (csak a szerver, service role).
+select pg_temp.login(:'bela'); set role authenticated;
+insert into draws (group_id, name, created_by) values (:'family', 'Szilveszter', :'bela') returning id as draw2 \gset
+insert into draw_participants (draw_id, profile_id) values (:'draw2', :'anna'), (:'draw2', :'bela'), (:'draw2', :'eva');
+insert into draw_exclusions (draw_id, giver_id, receiver_id) values (:'draw2', :'anna', :'bela');
+do $$ begin
+  begin
+    perform commit_draw((select id from draws where name = 'Szilveszter'), '[]'::jsonb);
+    raise exception 'FAIL: a kliens hívhatja a commit_draw-t';
+  exception when insufficient_privilege then null;
+  end;
+end $$;
+reset role;
+
+set role service_role;
+-- Kizárást sértő eredmény elutasítva
+do $$ begin
+  begin
+    perform commit_draw((select id from draws where name = 'Szilveszter'), jsonb_build_array(
+      jsonb_build_object('giver', '00000000-0000-0000-0000-0000000000a1', 'receiver', '00000000-0000-0000-0000-0000000000b2'),
+      jsonb_build_object('giver', '00000000-0000-0000-0000-0000000000b2', 'receiver', '00000000-0000-0000-0000-0000000000e5'),
+      jsonb_build_object('giver', '00000000-0000-0000-0000-0000000000e5', 'receiver', '00000000-0000-0000-0000-0000000000a1')));
+    raise exception 'FAIL: kizárást sértő sorsolás bekerült';
+  exception when raise_exception then
+    if sqlerrm <> 'invalid_assignment' then raise; end if;
+  end;
+end $$;
+-- Hiányos eredmény elutasítva
+do $$ begin
+  begin
+    perform commit_draw((select id from draws where name = 'Szilveszter'), jsonb_build_array(
+      jsonb_build_object('giver', '00000000-0000-0000-0000-0000000000a1', 'receiver', '00000000-0000-0000-0000-0000000000e5')));
+    raise exception 'FAIL: hiányos sorsolás bekerült';
+  exception when raise_exception then
+    if sqlerrm <> 'invalid_assignment' then raise; end if;
+  end;
+end $$;
+select commit_draw(:'draw2', jsonb_build_array(
+  jsonb_build_object('giver', :'anna', 'receiver', :'eva'),
+  jsonb_build_object('giver', :'eva', 'receiver', :'bela'),
+  jsonb_build_object('giver', :'bela', 'receiver', :'anna')));
+reset role;
+do $$ begin
+  assert (select status from draws where name = 'Szilveszter') = 'drawn', 'FAIL: commit_draw nem zárta le';
+end $$;
+
+-- Csak a szervező állíthatja vissza
+select pg_temp.login(:'anna'); set role authenticated;
+do $$ begin
+  assert not reset_draw((select id from draws where name = 'Szilveszter')), 'FAIL: nem szervező visszaállította';
+end $$;
+reset role;
+select pg_temp.login(:'bela'); set role authenticated;
+do $$ begin
+  assert reset_draw((select id from draws where name = 'Szilveszter')), 'FAIL: a szervező nem tudta visszaállítani';
+end $$;
+reset role;
+do $$ begin
+  assert (select count(*) from draw_assignments a join draws d on d.id = a.draw_id where d.name = 'Szilveszter') = 0,
+    'FAIL: visszaállítás után maradt eredmény';
+end $$;
+
 \echo 'OK: minden titkossági teszt sikeres'
