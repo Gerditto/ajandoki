@@ -1,0 +1,19 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "main": ".open-next/worker.js",
+  "name": "ajandoki",
+  "compatibility_date": "2026-11-01",
+  "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public", "no_handle_cross_request_promise_resolution"],
+  "assets": {
+    "directory": ".open-next/assets",
+    "binding": "ASSETS"
+  },
+  "services": [{ "binding": "WORKER_SELF_REFERENCE", "service": "ajandoki" }],
+  // Nyilvános értékek (az RLS véd). A titkos kulcsok a Cloudflare felületén,
+  // "Secret" típusú változóként kerülnek be, soha nem ide.
+  "vars": {
+    "NEXT_PUBLIC_SUPABASE_URL": "https://cyiwqwyixyfnlkhimuhp.supabase.co",
+    "NEXT_PUBLIC_SUPABASE_ANON_KEY": "sb_publishable_lAfpwwztSmy51CF7sWIq3Q_LDajsHpD"
+  },
+  "observability": { "enabled": true }
+}

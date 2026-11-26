@@ -20,6 +20,3 @@ export default async function OnboardingPage() {
     </main>
   );
 }
-
-// Bejelentkezéshez kötött oldal: a szerveren várja meg a munkamenetet.
-export const instant = false;

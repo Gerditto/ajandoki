@@ -2,8 +2,8 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   /* config options here */
-  cacheComponents: true,
-  partialPrefetching: true,
+  // A Cache Components a Cloudflare-adapterben (OpenNext) még nem teljesen támogatott,
+  // ezért egyelőre kikapcsolva; minden bejelentkezett oldal amúgy is dinamikus.
   turbopack: {
     rules: {
       "*.css": {

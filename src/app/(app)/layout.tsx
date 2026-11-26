@@ -19,6 +19,3 @@ export default async function AppLayout({ children }: LayoutProps<'/'>) {
     </div>
   );
 }
-
-// Bejelentkezéshez kötött oldal: a szerveren várja meg a munkamenetet.
-export const instant = false;

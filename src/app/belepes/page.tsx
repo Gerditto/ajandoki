@@ -18,6 +18,3 @@ export default async function LoginPage({ searchParams }: PageProps<'/belepes'>)
     </main>
   );
 }
-
-// Bejelentkezéshez kötött oldal: a szerveren várja meg a munkamenetet.
-export const instant = false;
