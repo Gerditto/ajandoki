@@ -5,7 +5,7 @@ const esc = (s: string) =>
 
 export type Line = { title: string; detail?: string; href?: string };
 
-export function layout(opts: { heading: string; intro?: string; lines?: Line[]; cta?: { label: string; href: string }; footer: string }) {
+export function layout(opts: { logoUrl?: string; heading: string; intro?: string; lines?: Line[]; cta?: { label: string; href: string }; footer: string }) {
   const lines = (opts.lines ?? [])
     .map((l) => `<tr><td style="padding:12px 0;border-bottom:1px solid #e3dac6">
       <div style="font-size:16px;color:#16241d;font-weight:600">${l.href ? `<a href="${esc(l.href)}" style="color:#1c4532;text-decoration:none">${esc(l.title)}</a>` : esc(l.title)}</div>
@@ -15,8 +15,8 @@ export function layout(opts: { heading: string; intro?: string; lines?: Line[]; 
   return `<!doctype html><html lang="hu"><body style="margin:0;background:#f6f2e8;font-family:Helvetica,Arial,sans-serif">
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f6f2e8"><tr><td align="center" style="padding:24px 12px">
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:520px;background:#fffdf7;border:1px solid #e3dac6;border-radius:14px">
-<tr><td style="background:#163a2a;border-radius:14px 14px 0 0;padding:22px 28px">
-  <div style="font-size:12px;letter-spacing:4px;text-transform:uppercase;color:#d2b26a">Súgj!</div>
+<tr><td style="background:#163a2a;border-radius:14px 14px 0 0;padding:20px 28px">
+  ${opts.logoUrl ? `<img src="${esc(opts.logoUrl)}" width="96" alt="Súgj!" style="display:block;width:96px;height:auto;border:0">` : '<div style="font-size:12px;letter-spacing:4px;text-transform:uppercase;color:#d2b26a">Súgj!</div>'}
 </td></tr>
 <tr><td style="padding:28px">
   <h1 style="margin:0 0 6px;font-family:Georgia,serif;font-weight:500;font-size:24px;color:#1c4532">${esc(opts.heading)}</h1>

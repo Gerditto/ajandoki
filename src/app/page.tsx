@@ -1,9 +1,12 @@
+import Image from 'next/image';
+
 export default function Home() {
   return (
     <main className="flex flex-1 flex-col">
       <section className="flex flex-1 flex-col justify-center bg-[#132f23] px-6 py-20 text-[#f3ead3]">
         <div className="mx-auto flex w-full max-w-xl flex-col gap-7">
-          <p className="text-xs uppercase tracking-[0.3em] text-[#d2b26a]">Súgj!</p>
+          <Image src="/brand/logo.png" alt="Súgj!" width={640} height={629} priority unoptimized
+            className="h-auto w-44 sm:w-52" />
           <h1 className="text-4xl leading-tight text-[#f3ead3] sm:text-5xl">A meglepetés biztonságban van.</h1>
           <span className="ornament !w-16" aria-hidden />
           <p className="text-lg leading-relaxed text-[#f3ead3]/80">

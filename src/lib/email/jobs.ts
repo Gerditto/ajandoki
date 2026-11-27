@@ -78,7 +78,7 @@ export async function runDailyReminders(now = new Date()) {
       cta: { label: 'Megnyitom a Súgj! appot', href: `${appUrl()}/ma` },
       footer: FOOTER,
     };
-    if (await sendEmail({ to, subject: content.heading, html: layout(content), text: plainText(content) })) sent++;
+    if (await sendEmail({ to, subject: content.heading, html: layout({ ...content, logoUrl: `${appUrl()}/brand/logo-email.png` }), text: plainText(content) })) sent++;
   }
   return { expired, sent };
 }
@@ -109,6 +109,6 @@ export async function notifyDrawDone(drawId: string) {
       cta: { label: 'Megnézem, kit húztam', href },
       footer: FOOTER,
     };
-    await sendEmail({ to, subject: content.heading, html: layout(content), text: plainText(content) });
+    await sendEmail({ to, subject: content.heading, html: layout({ ...content, logoUrl: `${appUrl()}/brand/logo-email.png` }), text: plainText(content) });
   }));
 }
