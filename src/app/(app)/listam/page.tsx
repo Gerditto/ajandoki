@@ -6,7 +6,7 @@ import { archiveOwnItem } from './actions';
 const huf = new Intl.NumberFormat('hu-HU', { style: 'currency', currency: 'HUF', maximumFractionDigits: 0 });
 const PRIORITY = { 3: 'Nagyon szeretném', 2: 'Örülnék neki', 1: 'Ha belefér' } as Record<number, string>;
 
-export const metadata = { title: 'Listám – Ajándoki' };
+export const metadata = { title: 'Listám – Súgj!' };
 
 export default async function MyListPage() {
   const { supabase, user } = await requireProfile();

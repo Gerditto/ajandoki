@@ -1,6 +1,6 @@
 import { JoinGroupForm } from '../../csoportok/forms';
 
-export const metadata = { title: 'Csatlakozás – Ajándoki' };
+export const metadata = { title: 'Csatlakozás – Súgj!' };
 
 export default async function JoinPage({ params }: PageProps<'/csatlakozas/[kod]'>) {
   const { kod } = await params;

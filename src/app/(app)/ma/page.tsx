@@ -4,7 +4,7 @@ import { Card } from '@/components/ui';
 import { InstallHint } from '@/components/install-hint';
 import { formatMonthDay, namesOn, nextOccurrence, todayInBudapest } from '@/lib/nameday';
 
-export const metadata = { title: 'Ma – Ajándoki' };
+export const metadata = { title: 'Ma – Súgj!' };
 
 type Upcoming = { id: string; name: string; kind: 'születésnap' | 'névnap'; mmdd: string; days: number; age?: number };
 

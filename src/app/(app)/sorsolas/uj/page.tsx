@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation';
 import { requireProfile } from '@/lib/auth';
 import { NewDrawForm } from '../forms';
 
-export const metadata = { title: 'Új sorsolás – Ajándoki' };
+export const metadata = { title: 'Új sorsolás – Súgj!' };
 
 export default async function NewDrawPage({ searchParams }: PageProps<'/sorsolas/uj'>) {
   const { csoport } = await searchParams;

@@ -56,7 +56,7 @@ export function InvitePanel({ groupId, groupName }: { groupId: string; groupName
   }
 
   const share = async () => {
-    const text = `Csatlakozz a(z) „${groupName}” csoporthoz az Ajándokiban! Meghívókód: ${state.code}`;
+    const text = `Csatlakozz a(z) „${groupName}” csoporthoz a Súgj! appban! Meghívókód: ${state.code}`;
     if (navigator.share) {
       await navigator.share({ title: 'Meghívó', text, url: link }).catch(() => {});
     } else {

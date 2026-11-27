@@ -3,8 +3,8 @@ import type { MetadataRoute } from 'next';
 export default function manifest(): MetadataRoute.Manifest {
   return {
     id: '/',
-    name: 'Ajándoki',
-    short_name: 'Ajándoki',
+    name: 'Súgj!',
+    short_name: 'Súgj!',
     description: 'Kívánságlisták, titkos foglalás és ajándékhúzás a családnak és a barátoknak.',
     lang: 'hu',
     start_url: '/ma',

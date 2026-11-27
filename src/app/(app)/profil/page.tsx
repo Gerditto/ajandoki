@@ -4,7 +4,7 @@ import { setEmailReminders, signOut } from '@/lib/profile-actions';
 import { Button, Card } from '@/components/ui';
 import { PasswordForm } from '@/components/password-form';
 
-export const metadata = { title: 'Profil – Ajándoki' };
+export const metadata = { title: 'Profil – Súgj!' };
 
 export default async function ProfilePage({ searchParams }: PageProps<'/profil'>) {
   const sp = await searchParams;

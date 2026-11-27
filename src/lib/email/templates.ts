@@ -16,7 +16,7 @@ export function layout(opts: { heading: string; intro?: string; lines?: Line[]; 
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f6f2e8"><tr><td align="center" style="padding:24px 12px">
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:520px;background:#fffdf7;border:1px solid #e3dac6;border-radius:14px">
 <tr><td style="background:#163a2a;border-radius:14px 14px 0 0;padding:22px 28px">
-  <div style="font-size:12px;letter-spacing:4px;text-transform:uppercase;color:#d2b26a">Ajándoki</div>
+  <div style="font-size:12px;letter-spacing:4px;text-transform:uppercase;color:#d2b26a">Súgj!</div>
 </td></tr>
 <tr><td style="padding:28px">
   <h1 style="margin:0 0 6px;font-family:Georgia,serif;font-weight:500;font-size:24px;color:#1c4532">${esc(opts.heading)}</h1>

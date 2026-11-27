@@ -2,7 +2,7 @@ import { redirect } from 'next/navigation';
 import { requireUser } from '@/lib/auth';
 import { ProfileForm } from '@/components/profile-form';
 
-export const metadata = { title: 'Üdv az Ajándokiban!' };
+export const metadata = { title: 'Üdv! – Súgj!' };
 
 export default async function OnboardingPage({ searchParams }: PageProps<'/bemutatkozas'>) {
   const sp = await searchParams;

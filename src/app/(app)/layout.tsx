@@ -8,7 +8,7 @@ export default async function AppLayout({ children }: LayoutProps<'/'>) {
     <div className="flex min-h-full flex-1 flex-col md:flex-row">
       <aside className="hidden w-60 shrink-0 flex-col gap-6 border-r border-border bg-bg p-6 md:flex">
         <Link href="/ma" className="flex flex-col gap-2">
-          <span className="font-display text-2xl text-primary">Ajándoki</span>
+          <span className="font-display text-2xl text-primary">Súgj!</span>
           <span className="ornament" aria-hidden />
         </Link>
         <NavLinks orientation="vertical" />

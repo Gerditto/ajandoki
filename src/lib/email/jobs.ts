@@ -7,7 +7,7 @@ import { layout, plainText, type Line } from './templates';
 
 type Admin = ReturnType<typeof createServiceClient>;
 
-const FOOTER = 'Ezt a levelet az Ajándoki küldte. Az emlékeztetőket a Profil oldalon kapcsolhatod ki.';
+const FOOTER = 'Ezt a levelet a Súgj! app küldte. Az emlékeztetőket a Profil oldalon kapcsolhatod ki.';
 
 async function emailsById(admin: Admin): Promise<Map<string, string>> {
   const map = new Map<string, string>();
@@ -75,7 +75,7 @@ export async function runDailyReminders(now = new Date()) {
       heading: entries.length === 1 ? entries[0].title : 'Közelgő alkalmak',
       intro: 'Egy kis emlékeztető, hogy semmi ne csússzon el:',
       lines: entries.map(entryLine),
-      cta: { label: 'Megnyitom az Ajándokit', href: `${appUrl()}/ma` },
+      cta: { label: 'Megnyitom a Súgj! appot', href: `${appUrl()}/ma` },
       footer: FOOTER,
     };
     if (await sendEmail({ to, subject: content.heading, html: layout(content), text: plainText(content) })) sent++;

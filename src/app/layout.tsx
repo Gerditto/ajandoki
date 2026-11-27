@@ -8,10 +8,10 @@ const inter = Inter({ variable: "--font-inter", subsets: ["latin", "latin-ext"] 
 const fraunces = Fraunces({ variable: "--font-fraunces", subsets: ["latin", "latin-ext"] });
 
 export const metadata: Metadata = {
-  title: "Ajándoki – a meglepetés biztonságban van",
+  title: "Súgj! – a meglepetés biztonságban van",
   description: "Kívánságlisták, titkos foglalás és ajándékhúzás a családnak és a barátoknak.",
-  applicationName: "Ajándoki",
-  appleWebApp: { capable: true, title: "Ajándoki", statusBarStyle: "default" },
+  applicationName: "Súgj!",
+  appleWebApp: { capable: true, title: "Súgj!", statusBarStyle: "default" },
   formatDetection: { telephone: false },
 };
 

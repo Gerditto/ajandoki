@@ -3,7 +3,7 @@ import { requireProfile } from '@/lib/auth';
 import { Card } from '@/components/ui';
 import { CreateGroupForm, JoinGroupForm } from './forms';
 
-export const metadata = { title: 'Csoportok – Ajándoki' };
+export const metadata = { title: 'Csoportok – Súgj!' };
 
 export default async function GroupsPage() {
   const { supabase, user } = await requireProfile();

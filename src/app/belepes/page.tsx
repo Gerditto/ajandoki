@@ -1,6 +1,6 @@
 import { LoginForm } from './login-form';
 
-export const metadata = { title: 'Belépés – Ajándoki' };
+export const metadata = { title: 'Belépés – Súgj!' };
 
 export default async function LoginPage({ searchParams }: PageProps<'/belepes'>) {
   const sp = await searchParams;

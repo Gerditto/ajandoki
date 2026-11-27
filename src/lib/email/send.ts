@@ -21,7 +21,7 @@ export async function sendEmail(email: Email): Promise<boolean> {
       method: 'POST',
       headers: { 'api-key': apiKey, 'content-type': 'application/json', accept: 'application/json' },
       body: JSON.stringify({
-        sender: { email: from, name: 'Ajándoki' },
+        sender: { email: from, name: 'Súgj!' },
         to: [{ email: email.to }],
         subject: email.subject,
         htmlContent: email.html,

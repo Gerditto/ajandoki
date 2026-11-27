@@ -4,7 +4,7 @@ import { requireProfile } from '@/lib/auth';
 import { Button, Card, SecretBadge } from '@/components/ui';
 import { addExclusion, deleteDraw, performDraw, removeExclusion, resetDraw } from '../actions';
 
-export const metadata = { title: 'Titkos Mikulás – Ajándoki' };
+export const metadata = { title: 'Titkos Mikulás – Súgj!' };
 
 const huf = new Intl.NumberFormat('hu-HU', { style: 'currency', currency: 'HUF', maximumFractionDigits: 0 });
 const dateFmt = new Intl.DateTimeFormat('hu-HU', { year: 'numeric', month: 'long', day: 'numeric' });
